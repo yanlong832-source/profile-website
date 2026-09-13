@@ -21,3 +21,26 @@
 footer{display:none}
 @media(max-width:900px){.site-header nav{display:flex}.site-header nav.open{display:flex;position:absolute;top:68px;left:50%;right:auto;transform:translateX(-50%);z-index:4;background:#fff;border:1px solid var(--line);padding:8px 16px;flex-direction:column;gap:0;width:min(240px,calc(100vw - 40px))}.site-header nav.open button{text-align:center;padding:12px 0;border-bottom:1px solid var(--line)}.site-header nav.open button:last-child{border-bottom:0}.menu{display:none}}
 @media(max-width:520px){.site-header{height:78px}.site-header nav{gap:0;padding:4px}.site-header nav button{padding:8px 10px;font-size:12px}.hero{min-height:calc(100vh - 78px)}}
+
+/* Contact icons on the home hero. */
+.qq-link{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;color:var(--ink)!important}
+.qq-icon{display:grid;place-items:center;width:23px;height:23px;border:2px solid currentColor;border-radius:50%;font:700 13px Manrope,sans-serif}
+
+/* Image-first waterfall layouts for projects and blog posts. */
+.projects-masonry{display:block;column-count:3;column-gap:24px}
+.projects-masonry .project-card{display:inline-flex;width:100%;margin:0 0 24px;break-inside:avoid}
+.blog-section .section-heading.split{max-width:1280px;margin-left:auto;margin-right:auto}
+.blog-flow{display:block;max-width:1280px;column-count:3;column-gap:24px}
+.blog-flow::before{display:none}
+.blog-card{display:inline-flex;width:100%;margin:0 0 24px;break-inside:avoid;grid-template-columns:none;gap:0;padding:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff;flex-direction:column;transition:transform .25s ease,box-shadow .25s ease}
+.blog-card:first-child{border-top:1px solid var(--line)}
+.blog-card:hover{padding:0;background:#fff;transform:translateY(-4px);box-shadow:0 18px 40px rgba(15,23,42,.1)}
+.blog-rail{display:flex;flex-direction:row;justify-content:space-between;align-items:center;padding:16px 18px 0;background:#fff}
+.blog-card:hover .blog-rail{background:#fff}
+.blog-rail strong{width:36px;height:36px}
+.blog-card-main{padding:0 18px 18px}
+.blog-card-top{margin:14px 0 12px}
+.blog-card h3{font-size:22px}
+.blog-card-arrow{position:absolute;right:18px;top:16px}
+@media(max-width:900px){.projects-masonry,.blog-flow{column-count:2}}
+@media(max-width:600px){.projects-masonry,.blog-flow{column-count:1}.blog-card-main{padding:0 16px 16px}}
