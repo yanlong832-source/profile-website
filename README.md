@@ -23,4 +23,4 @@ npm run build
 
 项目预览图放在 `public/projects/`，然后在对应项目中添加 `image: "/projects/文件名.webp"`。图片字段是可选的，没有填写时项目卡片保持无图布局。
 
-GitHub 在线编辑 `src/content/site.ts` 后直接提交到 `main`，`.github/workflows/deploy.yml` 会自动构建并部署 Pages；首次使用前请在仓库 Settings → Actions → General 启用 Actions，并在 Settings → Pages 将 Source 设为 GitHub Actions。
+GitHub 在线编辑 `src/content/site.ts` 后直接提交到 `main`，`.github/workflows/deploy.yml` 会自动构建并部署 Pages；新建或编辑 Issue 也会触发构建。首次使用前请在仓库 Settings → Actions → General 启用 Actions，并在 Settings → Pages 将 Source 设为 GitHub Actions。

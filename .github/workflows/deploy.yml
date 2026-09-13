@@ -2,6 +2,8 @@ name: Deploy profile website
 on:
   push:
     branches: [main]
+  issues:
+    types: [opened, edited, closed, reopened, labeled, unlabeled]
   workflow_dispatch:
   schedule:
     - cron: "17 2 * * *"
