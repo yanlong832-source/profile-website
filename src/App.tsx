@@ -1,14 +1,8 @@
 import { useEffect, useState, type ReactNode } from "react";
-import { projects } from "./content/projects";
+import { projects, skills } from "./content/site";
 import type { Project } from "./types";
 
 type View = "home" | "projects" | "about";
-
-const skills = {
-  Languages: [["Go / Golang", 95], ["Java", 90], ["Python", 85], ["Node.js / TS", 80]],
-  Infrastructure: [["PostgreSQL", 90], ["Redis", 95], ["Docker / K8s", 85], ["Linux & Nginx", 90]],
-  "AI & LLM": [["LLM Integration", 85], ["RAG Architectures", 80], ["LangChain Agents", 75], ["API Gateways", 90]],
-};
 
 function Arrow() { return <span className="arrow" aria-hidden="true">↗</span>; }
 
