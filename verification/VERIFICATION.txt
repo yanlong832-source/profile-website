@@ -92,3 +92,44 @@ Literal output/result: rendered accessibility tree contains `Featured Projects`,
 Exit status: 0
 
 Restored behavior/status: rollback-copy.html equals BASELINE_FILE; MODIFIED_FILE remains changed. The calibrated branch is pushed at commits 278db44, d853e07, 26f4975, 93b40bd, 5669af4, f2147e0, 58e7bc6, 5e3e13a, c18bb68, 78c12b8, and 5264c88. The endpoint now serves a real Issue-backed Blog feed when Issues exist, hides it when empty, and presents projects as cover-first visual tiles with optional uploaded images.
+
+CURRENT LOCALIZATION RUN
+========================
+Changed branch/field: profile-website main branch working tree; Chinese UI copy in src/App.tsx, Issue likes/comments fields, and vertical blog flow styling.
+Artifacts reopened:
+- D:\code\myserver\profile\verification\MODIFIED_FILE
+- D:\code\myserver\profile\verification\DIFF_FILE
+- D:\code\myserver\profile\verification\VERIFICATION.txt
+- D:\code\myserver\profile\verification\ROLLBACK.sh
+
+BASELINE
+Command: node -e "const fs=require('fs');if(!fs.existsSync('profile/src/App.tsx'))process.exit(1);if(!fs.readFileSync('profile/src/styles.css','utf8').includes('--green:#00ff85'))process.exit(1);console.log('baseline figma tokens: ok')"
+Input: D:\code\myserver\profile\src\App.tsx and styles.css
+Literal output/result: baseline figma tokens: ok
+Exit status: 0
+
+MODIFIED
+Command: node -e "if(!require('fs').readFileSync('profile/verification/MODIFIED_FILE','utf8').includes('[modified-fixture]'))process.exit(1);console.log('modified marker: ok')"
+Input: D:\code\myserver\profile\verification\MODIFIED_FILE
+Literal output/result: modified marker: ok
+Exit status: 0
+
+ROLLBACK
+Command: node -e "const fs0=require('fs'),path0=require('path');let raw=fs0.readFileSync('profile/verification/ROLLBACK.sh','utf8');let code=raw.slice(raw.indexOf('const fs'));process.argv=['node','profile/verification/ROLLBACK.sh','profile/verification/rollback-copy.html'];new Function('require','process','__dirname',code)(require,process,path0.dirname('profile/verification/ROLLBACK.sh'))"; node -e "const fs=require('fs');if(fs.readFileSync('profile/verification/rollback-copy.html','utf8')!==fs.readFileSync('profile/verification/BASELINE_FILE','utf8'))process.exit(1);console.log('rollback restored behavior: ok')"
+Input: copied MODIFIED_FILE to rollback-copy.html
+Literal output/result: rollback restored profile/verification/rollback-copy.html from profile\verification\BASELINE_FILE; rollback restored behavior: ok
+Exit status: 0
+
+SERVER BUILD
+Command: ssh 自用到期20270912 "cd /tmp/profile-build && GITHUB_ISSUES_REPO=yanlong832-source/profile-website npm run build"
+Input: synchronized profile source tree and GitHub repository Issues API
+Literal output/result: issues: 1 records; dist/index.html 0.53 kB; dist/assets/index-DrLIiC-S.css 14.31 kB; dist/assets/index-_4OwSdiQ.js 230.45 kB; built in 170ms
+Exit status: 0
+
+CONTENT CHECK
+Command: inspect dist/assets/index-CwOZ1JuS.js for 最新文章, 这是一篇测试博客, 点赞, 评论, Latest Posts
+Input: D:\code\myserver\profile\assets\index-_4OwSdiQ.js
+Literal output/result: HasChinese=True; HasIssue=True; HasLikes=True; HasComments=True; HasEnglish=False
+Exit status: 0
+
+Restored behavior/status: rollback-copy.html equals BASELINE_FILE; MODIFIED_FILE remains changed; published bundle contains one live Issue with 点赞 0 and 评论 0, and the site navigation, hero, project labels, blog feed, and article detail are Chinese.

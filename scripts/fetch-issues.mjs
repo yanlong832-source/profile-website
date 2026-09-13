@@ -18,6 +18,8 @@ try {
       created_at: item.created_at,
       updated_at: item.updated_at,
       html_url: item.html_url,
+      likes: item.reactions?.["+1"] || 0,
+      comments: item.comments || 0,
     }));
   await mkdir(resolve("src/data"), {recursive: true});
   await writeFile(dataFile, JSON.stringify(issues, null, 2));
