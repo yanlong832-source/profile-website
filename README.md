@@ -1,5 +1,7 @@
 # profile.yangzx1.xyz
 
+Deployment is managed by GitHub Actions and publishes the Vite `dist` artifact to GitHub Pages.
+
 Vite + React 个人技术主页：项目档案、GitHub Issues 文章、标签筛选和 Giscus 评论入口。
 
 ## 本地开发
