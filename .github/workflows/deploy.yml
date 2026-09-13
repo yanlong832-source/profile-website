@@ -21,6 +21,7 @@ jobs:
         with:
           node-version: 20
       - run: npm install
+      - run: cp index.src.html index.html
       - run: npm run build
         env:
           VITE_GISCUS_REPO_ID: ${{ vars.VITE_GISCUS_REPO_ID }}
