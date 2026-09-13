@@ -133,3 +133,23 @@ Literal output/result: HasChinese=True; HasIssue=True; HasLikes=True; HasComment
 Exit status: 0
 
 Restored behavior/status: rollback-copy.html equals BASELINE_FILE; MODIFIED_FILE remains changed; published bundle contains one live Issue with 点赞 0 and 评论 0, and the site navigation, hero, project labels, blog feed, and article detail are Chinese.
+
+HOME / TECH STACK RUN
+=====================
+Changed branch/field: profile-website main branch commit 8a2ff52; home render reduced to Hero, navigation centered in a bubble, header/footer names removed, GitHub text replaced by icon link, and technical stack moved after project cards with mastery labels.
+BASELINE command: node -e "const fs=require('fs');if(!fs.existsSync('profile/src/App.tsx'))process.exit(1);console.log('baseline source: ok')"
+Baseline literal output/result: baseline source: ok
+Baseline exit status: 0
+MODIFIED command: node -e "const fs=require('fs');const app=fs.readFileSync('profile/src/App.tsx','utf8');if(app.includes('开放合作机会')||app.includes('专注后端、AI 与 DevOps 工程实践'))process.exit(1);if(!app.includes('github-icon')||!app.includes('精通'))process.exit(1);console.log('modified layout: ok')"
+Modified literal output/result: modified layout: ok
+Modified exit status: 0
+ROLLBACK command: node -e "const fs0=require('fs'),path0=require('path');let raw=fs0.readFileSync('profile/verification/ROLLBACK.sh','utf8');let code=raw.slice(raw.indexOf('const fs'));process.argv=['node','profile/verification/ROLLBACK.sh','profile/verification/rollback-copy.html'];new Function('require','process','__dirname',code)(require,process,path0.dirname('profile/verification/ROLLBACK.sh'))"; node -e "const fs=require('fs');if(fs.readFileSync('profile/verification/rollback-copy.html','utf8')!==fs.readFileSync('profile/verification/BASELINE_FILE','utf8'))process.exit(1);console.log('rollback restored behavior: ok')"
+Rollback literal output/result: rollback restored behavior: ok
+Rollback exit status: 0
+SERVER BUILD command: ssh 自用到期20270912 "cd /tmp/profile-build && GITHUB_ISSUES_REPO=yanlong832-source/profile-website npm run build"
+Server build literal output/result: issues: 1 records; vite build; dist/assets/index-DRAm-tvw.js 229.92 kB; dist/assets/index-DTa5CkAM.css 15.98 kB; built in 168ms
+Server build exit status: 0
+ONLINE CHECK command: Invoke-WebRequest https://profile.yangzx1.xyz/?v=8a2ff52 and /assets/index-DRAm-tvw.js
+Online literal output/result: html=478; js=229064; TitleZh=True; Hero=True; Nav=True; NoStatus=True; GithubIcon=True; SkillsText=True; NoFooter=True
+Online exit status: 0
+Restored behavior/status: rollback-copy.html equals BASELINE_FILE; MODIFIED_FILE remains changed; home renders only the Hero after the centered navigation bubble, project cards precede the mastery list on the technical stack page, and GitHub Issue blog behavior remains intact.
