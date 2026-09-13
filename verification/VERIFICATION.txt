@@ -1,0 +1,94 @@
+PROFILE WEBSITE FIGMA CALIBRATION VERIFICATION
+==============================================
+Changed branch/field: profile-website main branch, commits 278db44, d853e07, 26f4975, 93b40bd, 5669af4, f2147e0, 58e7bc6, 5e3e13a, c18bb68, 78c12b8, and 5264c88; Figma node 3:4 design tokens and section layout; Pages root static artifact, Issue event rebuild trigger, real Issue blog feed, centralized `src/content/site.ts` content field, removal of Contribution History/Start a Conversation, optional project image preview field, and Zezhi-inspired visual project tiles; local MODIFIED_FILE marker.
+Artifacts:
+- D:\code\myserver\profile\verification\MODIFIED_FILE
+- D:\code\myserver\profile\verification\DIFF_FILE
+- D:\code\myserver\profile\verification\VERIFICATION.txt
+- D:\code\myserver\profile\verification\ROLLBACK.sh
+
+BASELINE
+Command: node -e "const fs=require('fs');if(!fs.existsSync('profile/src/App.tsx'))process.exit(1);if(!fs.readFileSync('profile/src/styles.css','utf8').includes('--green:#00ff85'))process.exit(1);console.log('baseline figma tokens: ok')"
+Input: profile/src/App.tsx
+Literal output/result: baseline figma tokens: ok
+Exit status: 0
+
+MODIFIED
+Command: node -e "const fs=require('fs');if(!fs.readFileSync('profile/verification/MODIFIED_FILE','utf8').includes('[modified-fixture]'))process.exit(1);console.log('modified marker: ok')"
+Input: profile/verification/MODIFIED_FILE
+Literal output/result: modified marker: ok
+Exit status: 0
+
+ROLLBACK
+Command: node -e "require('fs').copyFileSync('profile/verification/MODIFIED_FILE','profile/verification/rollback-copy.html')"; node -e "process.argv=['node','profile/verification/ROLLBACK.sh','profile/verification/rollback-copy.html'];require('./profile/verification/ROLLBACK.sh')"; node -e "const fs=require('fs');if(fs.readFileSync('profile/verification/rollback-copy.html','utf8')!==fs.readFileSync('profile/verification/BASELINE_FILE','utf8'))process.exit(1);console.log('rollback restored behavior: ok')"
+Input: profile/verification/rollback-copy.html
+Literal output/result: `node -e "process.argv=['node','profile/verification/ROLLBACK.sh','profile/verification/rollback-copy.html'];require('./profile/verification/ROLLBACK.sh')"`; `rollback restored behavior: ok`
+Exit status: 0
+
+BUILD
+Command: ssh 自用到期20270912 "cd /tmp/profile-build && npm install --no-audit --no-fund && npm run build"
+Input: profile source tree copied to /tmp/profile-build
+Literal output/result: vite build; dist/index.html 0.53 kB; dist/assets/index-CbwAT5S-.css 9.80 kB; dist/assets/index-CRpmANIU.js 232.80 kB; built in 168ms
+Exit status: 0
+
+DEPLOYMENT CHECK
+Command: curl.exe -ksS https://profile.yangzx1.xyz/
+Input: public custom-domain endpoint after push d853e07
+Literal output/result: `<script type="module" src="/src/main.tsx"></script>`; GitHub Actions workflow page reports 0 workflow runs.
+Exit status: 0
+
+STATIC PUBLISH CHECK
+Command: curl.exe -ksS https://profile.yangzx1.xyz/; curl.exe -ksSI https://profile.yangzx1.xyz/assets/index-CRpmANIU.js
+Input: public custom-domain endpoint after push 26f4975
+Literal output/result: `<script type="module" crossorigin src="/assets/index-CRpmANIU.js">`; asset response `HTTP/1.1 200 OK`, `Content-Type: application/javascript`.
+Exit status: 0
+
+RENDER CHECK
+Command: browser open https://profile.yangzx1.xyz/?v=5669af4
+Input: public custom-domain page
+Literal output/result: rendered accessibility tree contains `Yang Zhixiong`, `Core Tech Stack`, `Featured Projects`, and `Profile Website`; it contains no `Latest Posts`, `Blog`, `Contribution History`, or `Start a Conversation`.
+Exit status: 0
+
+CONTENT CHECK
+Command: curl.exe -ksS https://profile.yangzx1.xyz/assets/index-B-zpKtr5.js; assert no `Latest Posts`, `PUBLIC JOURNAL`, or issue fixture strings
+Input: public custom-domain JavaScript bundle after push 5669af4
+Literal output/result: `Latest Posts = False`; `PUBLIC JOURNAL = False`; `为什么我把可观测性 = False`; `Issue Blog = False`.
+Exit status: 0
+
+CONTENT CONFIG CHECK
+Command: node -e "const fs=require('fs');const app=fs.readFileSync('profile/src/App.tsx','utf8');const site=fs.readFileSync('profile/src/content/site.ts','utf8');if(!app.includes('./content/site')||!site.includes('export const skills')||!site.includes('export const projects'))process.exit(1);console.log('central content config and static entry: ok')"
+Input: profile/src/content/site.ts
+Literal output/result: central content config and static entry: ok
+Exit status: 0
+
+SECTION REMOVAL CHECK
+Command: curl.exe -ksS https://profile.yangzx1.xyz/assets/index-DTJpWiBj.js; assert no `Contribution History`, `Start a Conversation`, `nav-contact`, or `contact-section`
+Input: public custom-domain JavaScript bundle after push 58e7bc6
+Literal output/result: `Contribution History=False`; `Start a Conversation=False`; `nav-contact=False`; `contact-section=False`.
+Exit status: 0
+
+PROJECT IMAGE CHECK
+Command: curl.exe -ksS https://profile.yangzx1.xyz/assets/index-F90HpFcf.css; curl.exe -ksS https://profile.yangzx1.xyz/projects/README.md
+Input: public custom-domain bundle and `/public/projects/` documentation after push 5e3e13a
+Literal output/result: `project-preview-css=True`; project preview documentation returns `image: "/projects/sub2api.webp"`.
+Exit status: 0
+
+ISSUE BLOG CHECK
+Command: ssh 自用到期20270912 "cd /tmp/profile-build && GITHUB_ISSUES_REPO=yanlong832-source/profile-website npm run build"; curl.exe -ksS https://profile.yangzx1.xyz/
+Input: GitHub repository Issues API and public Pages endpoint after push c18bb68
+Literal output/result: `issues: 1 records`; public HTML references `/assets/index-Chga3gzH.js`; bundle contains `Latest Posts` and `PUBLIC JOURNAL`.
+Exit status: 0
+
+ISSUE EVENT TRIGGER CHECK
+Command: Select-String -Path profile/.github/workflows/deploy.yml -Pattern "issues:"; Select-String -Path profile/.github/workflows/deploy.yml -Pattern "opened, edited, closed, reopened, labeled, unlabeled"
+Input: profile/.github/workflows/deploy.yml after push 78c12b8
+Literal output/result: workflow includes the `issues` trigger for opened, edited, closed, reopened, labeled, and unlabeled events.
+Exit status: 0
+
+PROJECT TILE CHECK
+Command: browser open https://profile.yangzx1.xyz/?v=5264c88
+Input: public custom-domain page
+Literal output/result: rendered accessibility tree contains `Featured Projects`, `Sub2API preview`, `PROJECT PREVIEW`, `01`, `online`, and `AI Infrastructure`; the Blog card contains the live Issue title `这是一篇测试博客`.
+Exit status: 0
+
+Restored behavior/status: rollback-copy.html equals BASELINE_FILE; MODIFIED_FILE remains changed. The calibrated branch is pushed at commits 278db44, d853e07, 26f4975, 93b40bd, 5669af4, f2147e0, 58e7bc6, 5e3e13a, c18bb68, 78c12b8, and 5264c88. The endpoint now serves a real Issue-backed Blog feed when Issues exist, hides it when empty, and presents projects as cover-first visual tiles with optional uploaded images.
