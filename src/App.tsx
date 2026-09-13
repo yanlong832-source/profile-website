@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState } from "react";
 import { projects, skills } from "./content/site";
 import issueData from "./data/issues.json";
 import type { Issue, Project } from "./types";
@@ -20,7 +20,7 @@ function Hero({ navigate }: { navigate: (view: View) => void }) {
 }
 
 function SkillsSection() {
-  return <section className="figma-section skills-section" id="tech-stack"><div className="section-heading"><p>工程能力</p><h2>核心技术栈</h2></div><div className="skills-grid">{Object.entries(skills).map(([category, rows]) => <article className="skill-card" key={category}><h3>{category === "Languages" ? "编程语言" : category === "Infrastructure" ? "基础设施" : "AI 与大模型"}</h3><div className="skill-rows">{rows.map(([name, value]) => <div className="skill-row" key={name}><span>{name}</span><b>{value >= 90 ? "精通" : value >= 80 ? "熟练" : "掌握"} · {value}%</b></div>)}</div></article>)}</div></section>;
+  return <section className="figma-section skills-section" id="tech-stack"><div className="section-heading"><p>工程能力</p><h2>核心技术栈</h2></div><div className="skills-grid">{Object.entries(skills).map(([category, rows]) => <article className="skill-card" key={category}><h3>{category}</h3><div className="skill-rows">{rows.map((skill) => <div className="skill-row" key={skill.name}><div className="skill-row-title"><span>{skill.name}</span><b>{skill.level}</b></div><p>{skill.details}</p></div>)}</div></article>)}</div></section>;
 }
 
 function ProjectCard({ project }: { project: Project }) {
@@ -44,12 +44,10 @@ function IssueDetail({ issue, onBack }: { issue: Issue; onBack: () => void }) {
   return <section className="article"><button className="back" onClick={onBack}>← 返回博客</button><p className="eyebrow">ISSUE #{String(issue.number).padStart(3, "0")} · {issue.labels.join(" / ") || "公开日志"}</p><h1>{issue.title}</h1><div className="article-date"><span>更新于 {formatDate(issue.updated_at)}</span><IssueStats issue={issue} /></div><div className="article-body">{(issue.body || "这篇 Issue 还没有正文。").split(/\n\n+/).map((part, index) => <p key={index}>{part}</p>)}</div><div className="comments"><div className="comments-head"><span>讨论与互动</span><a href={issue.html_url} target="_blank" rel="noreferrer">在 GitHub 查看 <Arrow /></a></div><p>点赞和评论会同步自这个 GitHub Issue。</p></div></section>;
 }
 
-function PageIntro({ eyebrow, title, text }: { eyebrow: string; title: ReactNode; text: string }) { return <section className="page-intro figma-section"><p>{eyebrow}</p><h1>{title}</h1><span>{text}</span></section>; }
-
 export default function App() {
   const [view, setView] = useState<View>("home");
   const [activeIssue, setActiveIssue] = useState<Issue | null>(null);
   const navigate = (next: View) => { setView(next); setActiveIssue(null); window.scrollTo({ top: 0, behavior: "smooth" }); };
   useEffect(() => { document.title = `${view === "home" ? "杨智雄" : view === "projects" ? "项目" : view === "blog" ? "博客" : "技术栈"} / 后端 · AI · DevOps`; }, [view]);
-  return <div className="app"><Header view={view} navigate={navigate} /><main>{activeIssue ? <IssueDetail issue={activeIssue} onBack={() => setActiveIssue(null)} /> : view === "home" ? <Hero navigate={navigate} /> : view === "projects" ? <><PageIntro eyebrow="项目 / 作品" title={<>我正在<br /><em>构建和维护的系统。</em></>} text="围绕可靠后端基础设施打造的产品、工具和实验。" /><section className="figma-section page-section"><div className="projects-grid">{projects.map((project) => <ProjectCard key={project.name} project={project} />)}</div></section></> : view === "blog" && issues.length ? <><PageIntro eyebrow="博客 / 公开日志" title={<>把实践<br /><em>写成可复用的经验。</em></>} text="文章来自 GitHub Issues，按时间顺序记录正在探索的问题。" /><BlogSection onOpen={setActiveIssue} navigate={navigate} full /></> : <><PageIntro eyebrow="关于 / 技术栈" title={<>系统思考，<br /><em>务实交付。</em></>} text="我设计后端系统、AI 集成和部署流程，重视清晰度、稳定性与可度量的结果。" /><section className="figma-section page-section"><div className="projects-grid">{projects.map((project) => <ProjectCard key={project.name} project={project} />)}</div></section><SkillsSection /></>}</main></div>;
+  return <div className="app"><Header view={view} navigate={navigate} /><main>{activeIssue ? <IssueDetail issue={activeIssue} onBack={() => setActiveIssue(null)} /> : view === "home" ? <Hero navigate={navigate} /> : view === "projects" ? <section className="figma-section page-section"><div className="section-heading"><p>项目 / 作品</p><h2>精选项目</h2></div><div className="projects-grid">{projects.map((project) => <ProjectCard key={project.name} project={project} />)}</div></section> : view === "blog" && issues.length ? <BlogSection onOpen={setActiveIssue} navigate={navigate} full /> : <SkillsSection />}</main></div>;
 }

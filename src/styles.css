@@ -13,6 +13,8 @@
 .skill-rows{gap:0}
 .skill-row{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);font:500 14px 'Fira Code',monospace}
 .skill-row:last-child{border-bottom:0}
+.skill-row-title{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.skill-row p{margin:8px 0 0;color:var(--slate);font:400 13px/1.7 Manrope,Arial,sans-serif}
 .skill-row b{font-size:12px;color:var(--slate);font-weight:500;white-space:nowrap}
 .skill-row>div:first-child{display:contents}
 .progress{display:none}

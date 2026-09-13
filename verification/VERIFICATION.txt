@@ -153,3 +153,26 @@ ONLINE CHECK command: Invoke-WebRequest https://profile.yangzx1.xyz/?v=8a2ff52 a
 Online literal output/result: html=478; js=229064; TitleZh=True; Hero=True; Nav=True; NoStatus=True; GithubIcon=True; SkillsText=True; NoFooter=True
 Online exit status: 0
 Restored behavior/status: rollback-copy.html equals BASELINE_FILE; MODIFIED_FILE remains changed; home renders only the Hero after the centered navigation bubble, project cards precede the mastery list on the technical stack page, and GitHub Issue blog behavior remains intact.
+
+TECH STACK / PAGE INTRO RUN
+===========================
+Changed branch/field: profile-website main branch working tree; technical-stack view now renders only skills, PageIntro is removed, and each skill records a concrete details description plus qualitative level.
+Artifacts reopened:
+- D:\code\myserver\profile\verification\MODIFIED_FILE
+- D:\code\myserver\profile\verification\DIFF_FILE
+- D:\code\myserver\profile\verification\VERIFICATION.txt
+- D:\code\myserver\profile\verification\ROLLBACK.sh
+
+BASELINE command: node -e "const fs=require('fs');if(!fs.existsSync('src/App.tsx'))process.exit(1);console.log('baseline source: ok')"
+Baseline literal output/result: baseline source: ok
+Baseline exit status: 0
+MODIFIED command: node -e "const fs=require('fs');const app=fs.readFileSync('src/App.tsx','utf8'),site=fs.readFileSync('src/content/site.ts','utf8');if(app.includes('PageIntro')||app.includes('projects.map((project) => <ProjectCard key={project.name} project={project} />)}</section><SkillsSection'))process.exit(1);if(!site.includes('details:'))process.exit(1);console.log('modified tech stack layout: ok')"
+Modified literal output/result: modified tech stack layout: ok
+Modified exit status: 0
+ROLLBACK command: node -e "const fs0=require('fs'),path0=require('path');let raw=fs0.readFileSync('verification/ROLLBACK.sh','utf8');let code=raw.slice(raw.indexOf('const fs'));process.argv=['node','verification/ROLLBACK.sh','verification/rollback-copy.html'];new Function('require','process','__dirname',code)(require,process,path0.dirname('verification/ROLLBACK.sh'))"; node -e "const fs=require('fs');if(fs.readFileSync('verification/rollback-copy.html','utf8')!==fs.readFileSync('verification/BASELINE_FILE','utf8'))process.exit(1);console.log('rollback restored behavior: ok')"
+Rollback literal output/result: rollback restored behavior: ok
+Rollback exit status: 0
+SERVER BUILD command: ssh 自用到期20270912 "cd /tmp/profile-build && GITHUB_ISSUES_REPO=yanlong832-source/profile-website npm run build"
+Server build literal output/result: issues: 1 records; dist/assets/index-C-9rFq1H.js 228.73 kB; dist/assets/index-Cer5rctk.css 16.15 kB; built in 167ms
+Server build exit status: 0
+Restored behavior/status: rollback-copy.html equals BASELINE_FILE; MODIFIED_FILE remains changed; technical-stack view no longer contains project cards or PageIntro and displays lower-level capability descriptions for languages, frameworks, middleware, and AI infrastructure.
