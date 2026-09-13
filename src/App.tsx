@@ -21,7 +21,7 @@ function SkillsSection() {
 }
 
 function ProjectCard({ project }: { project: Project }) {
-  return <article className="project-card"><div className="project-card-head"><h3>{project.name}</h3><span className={`project-status ${project.status}`}>● {project.status === "online" ? "online" : "building"}</span></div><p>{project.description}</p><div className="stack">{project.stack.map((item) => <span key={item}>{item}</span>)}</div><div className="project-card-links">{project.url && <a href={project.url} target="_blank" rel="noreferrer">Live Demo <Arrow /></a>}{project.repository && <a href={project.repository} target="_blank" rel="noreferrer">Source Code <span className="source-icon">◈</span></a>}</div></article>;
+  return <article className="project-card">{project.image && <img className="project-preview" src={project.image} alt={`${project.name} project preview`} loading="lazy" />}<div className="project-card-head"><h3>{project.name}</h3><span className={`project-status ${project.status}`}>● {project.status === "online" ? "online" : "building"}</span></div><p>{project.description}</p><div className="stack">{project.stack.map((item) => <span key={item}>{item}</span>)}</div><div className="project-card-links">{project.url && <a href={project.url} target="_blank" rel="noreferrer">Live Demo <Arrow /></a>}{project.repository && <a href={project.repository} target="_blank" rel="noreferrer">Source Code <span className="source-icon">◈</span></a>}</div></article>;
 }
 
 function ProjectsSection({ navigate }: { navigate: (view: View) => void }) {

@@ -1,0 +1,10 @@
+.project-preview {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 8px;
+  background: var(--soft);
+  border: 1px solid var(--line);
+  margin-bottom: 24px;
+}
