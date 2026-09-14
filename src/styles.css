@@ -24,7 +24,7 @@ footer{display:none}
 
 /* Contact icons on the home hero. */
 .qq-link{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;color:var(--ink)!important}
-.qq-icon{display:grid;place-items:center;width:23px;height:23px;border:2px solid currentColor;border-radius:50%;font:700 13px Manrope,sans-serif}
+.qq-icon{display:block;width:24px;height:24px}
 
 /* Image-first waterfall layouts for projects and blog posts. */
 .projects-masonry{display:block;column-count:3;column-gap:24px}
