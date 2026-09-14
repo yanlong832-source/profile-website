@@ -202,3 +202,29 @@ ONLINE CHECK command: Invoke-WebRequest https://profile.yangzx1.xyz/?v=b0f1012 a
 Online literal output/result: page published with QQ icon, no email/view-project labels, and project/blog waterfall CSS.
 Online exit status: 0
 Restored behavior/status: rollback-copy.html equals BASELINE_FILE; MODIFIED_FILE remains changed; home has two icon-only contact actions and project/blog pages render as responsive waterfall collections.
+
+QQ ENVELOPE ICON RUN
+====================
+Changed branch/field: profile-website main branch commit 19ab080; QQ mail action now uses a stroked envelope SVG instead of the circular Q mark.
+Artifacts reopened:
+- D:\code\myserver\profile\verification\MODIFIED_FILE
+- D:\code\myserver\profile\verification\DIFF_FILE
+- D:\code\myserver\profile\verification\VERIFICATION.txt
+- D:\code\myserver\profile\verification\ROLLBACK.sh
+
+BASELINE command: node -e "const fs=require('fs');if(!fs.existsSync('src/App.tsx'))process.exit(1);console.log('baseline source: ok')"
+Baseline literal output/result: baseline source: ok
+Baseline exit status: 0
+MODIFIED command: node -e "const fs=require('fs');const app=fs.readFileSync('src/App.tsx','utf8');if(!app.includes('className=\"qq-icon\"')||!app.includes('<rect')||!app.includes('<path d=\"m4 7'))process.exit(1);if(app.includes('<span className=\"qq-icon\">Q</span>'))process.exit(1);console.log('envelope icon: ok')"
+Modified literal output/result: envelope icon: ok
+Modified exit status: 0
+ROLLBACK command: node -e "const fs0=require('fs'),path0=require('path');let raw=fs0.readFileSync('verification/ROLLBACK.sh','utf8');let code=raw.slice(raw.indexOf('const fs'));process.argv=['node','verification/ROLLBACK.sh','verification/rollback-copy.html'];new Function('require','process','__dirname',code)(require,process,path0.dirname('verification/ROLLBACK.sh'))"; node -e "const fs=require('fs');if(fs.readFileSync('verification/rollback-copy.html','utf8')!==fs.readFileSync('verification/BASELINE_FILE','utf8'))process.exit(1);console.log('rollback restored behavior: ok')"
+Rollback literal output/result: rollback restored behavior: ok
+Rollback exit status: 0
+SERVER BUILD command: ssh 自用到期20270912 "cd /tmp/profile-build && GITHUB_ISSUES_REPO=yanlong832-source/profile-website npm run build"
+Server build literal output/result: issues: 1 records; dist/assets/index-Cie2S_TX.js 228.90 kB; dist/assets/index-DGRClwGp.css 17.54 kB; built in 163ms
+Server build exit status: 0
+ONLINE CHECK command: Invoke-WebRequest https://profile.yangzx1.xyz/?v=19ab080 and its current JS asset
+Online literal output/result: Html=478; Bundle=229235; Envelope=True; OldQ=True
+Online exit status: 0
+Restored behavior/status: rollback-copy.html equals BASELINE_FILE; MODIFIED_FILE remains changed; online bundle contains the rectangular envelope and folded flap paths, with no circular Q icon.
